@@ -55,7 +55,6 @@ const logout = async(req, res) => {
         })
       }
     catch(error){
-        console.log("error-->",error)
         return res.status(error.statusCode).json({
             message:error.explaination
         });
@@ -73,7 +72,6 @@ const userPreferences = async(req,res) => {
     })
    }
    catch(error){
-    console.log("error-->",error)
      return res.status(error.statusCode).json({
         message:error.explaination
      });
