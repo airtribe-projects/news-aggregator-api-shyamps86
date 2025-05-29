@@ -45,7 +45,7 @@ class UserRepositary extends CrudRespositary {
     }
   ).select("-updatedAt -createdAt -password -__v");
    
-  return user;
+  return new ApiResponse(200, user, "successfully logged out");
   
   }
 
@@ -61,30 +61,50 @@ class UserRepositary extends CrudRespositary {
         {
           new: true,
         }
-      ).select("-updatedAt -createdAt -password -__v -refereshToken");
+      ).select("-updatedAt -createdAt -password -__v -refreshToken");
       
-      return user;
+      return new ApiResponse(200, user, "successfully preferences added");
     }
 
 
     async updateUserPreferences(id, data) {
-      // const preferencesArray = Array.isArray(data) ? data : [data];
       const user = await this.model.findByIdAndUpdate(
           id,
           {
-            $push: {
-              preferences: { $each: data },
+            $set: {
+              preferences: data,
             },
           },
           {
             new: true,
           }
-        ).select("-updatedAt -createdAt -password -__v -refereshToken");
+        ).select("-updatedAt -createdAt -password -__v -refreshToken");
         
-        return user;
+        return new ApiResponse(200, user, "successfully prefereces updated");
       }
-  }
+      async getNews(id) {
+        const user = await this.model.findById(
+          id
+        ).select("preferences -updatedAt -createdAt -password -__v -refreshToken");
+        
+        if (!user || !user.preferences || user.preferences.length === 0) {
+          return new ApiResponse(200, [], "No preferences found for user");
+        }
 
+        const newsResults = await Promise.allSettled(
+          user.preferences.map(async (preference) => {
+            const response = await fetch(
+              `https://newsapi.org/v2/everything?q=${preference}&apiKey=bb822841e09a42bca1e3317433c2b700`
+            );
+            const newsData = await response.json();
+            return { preference, articles: newsData.articles || [] };
+          })
+        );
+
+        return new ApiResponse(200, newsResults, "successfully fetched news");
+      }
+
+}
 
 
 module.exports =  UserRepositary;

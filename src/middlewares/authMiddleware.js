@@ -15,9 +15,9 @@ const jwt = require('jsonwebtoken');
     const decodedToken=jwt.verify(token,process.env.ACCESS_TOKEN_SECRET);
 
     const user=await User.findById(decodedToken._id);
-
+    console.log("user-->",user._id);
     req.user=user;
     next();
 }
 
-module.exports=verifyJwt
+module.exports=verifyJwt;

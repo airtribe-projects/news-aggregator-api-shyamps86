@@ -65,6 +65,8 @@ const logout = async(req, res) => {
 const userPreferences = async(req,res) => {
    try{
     const id=req.user._id;
+    console.log("id-->",id)
+    console.log("req.body-->",req.body)
     const {data}=req.body;
     const user=await UserService.userPreferences(id,data);
     return res.status(StatusCodes.CREATED).json({
@@ -97,6 +99,23 @@ const updateUserPreferences = async(req,res) => {
 
 
 
+const getNews = (req,res) => {
+   
+    try{
+      const id=new ObjectId('6838a90f319a899d4da1391d');
+      const {data}=req.body;
+      const user=UserService.getNews(id,data);
+      return res.status(StatusCodes.CREATED).json({
+          user
+      })
+    }
+    catch(error){
+      return res.status(error.statusCode).json({
+          message:error.explaination
+      });
+    }
+   
+};
 
 
 module.exports = {
@@ -104,5 +123,6 @@ module.exports = {
     logout,
     createUser,
     userPreferences,
-    updateUserPreferences
+    updateUserPreferences,
+    getNews
 }

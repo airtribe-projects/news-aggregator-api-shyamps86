@@ -33,16 +33,10 @@ class CrudRepositary {
         return new ApiResponse(200, createdUser, "successfully created");
     }
     delete(id) {
-        
+        //delete user or news
     }
 
-    update(id, { completed, title, description }) {
-       
-    }
-
-    patch(id, { completed, description }) {
-        
-    }
+   
 }
 
 module.exports = CrudRepositary;

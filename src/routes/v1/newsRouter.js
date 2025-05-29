@@ -1,9 +1,10 @@
 const router= require('express');
 
-const {NewsController}=require("../../controllers/index.js")
+const {NewsController}=require("../../controllers/index.js");
+const verifyJwt = require('../../middlewares/authMiddleware.js');
 const newsRouter=router();
 
-// newsRouter.use("/news",NewsController.createNews)
+newsRouter.get("/",verifyJwt, NewsController.getNews);
 
 
 module.exports=newsRouter;

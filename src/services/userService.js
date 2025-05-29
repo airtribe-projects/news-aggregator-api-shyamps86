@@ -59,5 +59,15 @@ const updateUserPreferences = async(id, data) => {
    }
 };
 
+const getNews = async(id, data) => {
+   try{
+       const user=await UserRespositary.getNews(id,data);
+       return user;
+   }
+   catch(error){
+     throw error;
+   }
+}
 
-module.exports = {createUser, logout,login, userPreferences,updateUserPreferences};
+
+module.exports = {createUser, logout,login, userPreferences,updateUserPreferences,getNews};

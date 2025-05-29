@@ -6,10 +6,11 @@ const userRouter=router();
 userRouter.post("/register",UserController.createUser);
 userRouter.post("/login",UserController.login);
 
-userRouter.post("/logout",verifyJwt, UserController.logout);
+userRouter.post("/signup",verifyJwt, UserController.logout);
 
 userRouter.post("/preferences",verifyJwt, UserController.userPreferences);
 userRouter.put("/preferences",verifyJwt, UserController.updateUserPreferences);
+userRouter.put("/news", UserController.getNews);
 
 
 module.exports=userRouter;

@@ -1,10 +1,12 @@
+const userModel = require("../models/userModel.js");
 const CrudRespositary=require("./crudRepositary.js")
 class NewsRepositary extends CrudRespositary {
-  constructor() {
-    super();
+  constructor(model) {
+    super(model);
   }
-  getAllByCompleted(data) {
-    
+  async getNews({ id }) {
+     
+  
   }
 }
 
